@@ -16,8 +16,12 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-    @book.save
-    redirect_to @book
+    if @book.save
+      redirect_to @book
+    else
+      flash.now[:alert] = @book.errors.full_messages
+      render :new
+    end
   end
 
   def edit
@@ -25,8 +29,12 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    @book.update(book_params)
-    redirect_to "/books/#{@book.id}"
+    if @book.update(book_params)
+      redirect_to "/books/#{@book.id}"
+    else
+      flash.now[:alert] = @book.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy

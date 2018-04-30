@@ -1,5 +1,11 @@
 <h1>書籍編集フォーム</h1>
 
+<% if flash["alert"].present? %>
+  <% flash["alert"].each do |value| %>
+    <%= content_tag(:div, value) %>
+  <% end %>
+<% end %>
+
 <%= form_with model: @book, local: true do |form| %>
 
 <p>
